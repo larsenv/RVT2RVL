@@ -1,0 +1,67 @@
+BFGR WadTools v0.39a
+
+Me base en la doc de wiibrew y en las segher tools, concretamente en zeventig. Lo libero bajo licencia GPLv2 (al igual que las segher tools), en parte por obligacion y para que todo el mundo pueda usar parte del codigo en sus programas, o lo que sea.
+
+Aplicaciones:
+wadunpacker: basicamente es el zeventig de segher pero modificado para que, ademas de desempaquetar un WAD, haga un dump del Ticket, TMD y cadena de certificados.
+
+wadpacker: se indica por argumentos el ticket, tmd, cert y nombre de fichero destino, con opcion de añadir varias opciones de firmado o de cambio de ID de titulo (ver ayuda ejecutando el programa sin parametros).
+A su vez actualiza la TMD con los hashes SHA y los tamaños de los XXXXXXXX.app. Si estos datos no son originales, se debe incluir el parametro "-sign" para que haga la firma trucha.
+
+wadsigncheck: Checkea la firma de un .wad de 2 formas: normal y trucha.
+
+imet_signer: Permite modificar nombres de canales de forma sencilla.
+USO: ./imet_signer 00000000.app [ archivo_texto ]
+Si solo se especifica el .app, se recalcula el hash md5 y se guarda en el mismo.
+Si se especifica un fichero de texto, pone en el .app las cadenas de texto contenidas en el archivo (usar solo UTF-8; se ignora un byte).
+El archivo de texto deberá contener 8 lineas: banner_info, autor, y 6 lineas con los nombres de canal en los 6 idiomas.
+
+finder: Script para bash que, dada una carpeta y un hash SHA1, busca un fichero en las subcarpetas que tenga el mismo hash dado y muestra la ruta completa, si lo encuentra. Solo devuelve la 1ª coincidencia. (Util para VC).
+Uso: ./finder carpeta hash
+
+Compilacion:
+
+tar xvjf bfgr_wadtools_v039a.tar.bz2
+cd bfgr_wadtools_v039a
+make
+
+
+(Da bastantes warnings, pero son simples faltas de casts)
+
+Prerequisitos:
+Paquetes "build-essential" y "libssl-dev".
+
+Observaciones del wadpacker:
+- Cuando no se encuentra un XXXXXXXX.app descrito en la TMD, se para el programa, se informa de ello con los datos de tamaño del archivo que falta (en decimal (bytes)) y el hash SHA que deberia tener segun la TMD proporcionada.
+- Para modificar un WAD existente, simplemente desempaquetarlo con
+wadunpacker, modificar los archivos pertinentes y empaquetar con la opcion "-sign".
+
+PD: NO me hago responsable de posibles daños de cualquier tipo.
+
+PD2: Cualquier modificacion/distribucion del programa sera siempre bienvenida y no tiene que contar con mi consentimiento. Se debera publicar el codigo fuente de cuaquier programa que incluya parte o la totalidad del mismo.
+
+Nuevas versiones:
+Changelog v0.37:
+- Arreglada la firma para que la acepte el instaldor de WADs.
+- Arreglado el wadchecksign, que ahora comprueba correctamente las firmas en modo normal y en modo trucha.
+
+Changelog v0.37b:
+- Añadido un script (bash) de busqueda de fichero segun un hash SHA1 dado. Uso: ./finder carpeta hash
+- Renombrado el comprobador de firmas.
+(Carece de interes su recompilacion en windows)
+
+Changelog v0.38:
+- Movidas funciones comunes a la libreria 'tools'.
+- Añadido un nuevo programa (imet_signer) para modificar los nombres de los canales.
+
+Changelog v0.38c:
+- Ahora se muestra la ayuda al ejecutar los programas sin argumentos. (Help fix)
+- Arreglado un bug importante en el wadpacker. Ahora se alinean los ficheros a 64bytes de forma correcta. (Boundary fix)
+
+Changelog v0.39a:
+Wadpacker:
+- Se han añadido mas opciones para firmar ticket o tmd de forma independiente. (-T -M)
+- Se ha añadido la opcion de cambiar la ID de titulo (-i ABCD)
+- Se ha añadido la opcion de desactivar la watermark o mas conocido como el "guiño". Cuando se activa esta opcion (-w) el ticket (si ha sido marcado para firmar) se firma exactamente igual que el blaze wadpacker (compatibles con la tienda).
+Imet_signer:
+- Ahora el fichero debera incluir 8 lineas: banner_info, autor y 6 lineas con el nombre del canal en los 6 idiomas.

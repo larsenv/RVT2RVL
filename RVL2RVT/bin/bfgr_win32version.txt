@@ -1,0 +1,5 @@
+common-key.bin and root-key.bin are read from executable's path (same folder)
+
+root-key.bin is not needed.
+
+@suloku

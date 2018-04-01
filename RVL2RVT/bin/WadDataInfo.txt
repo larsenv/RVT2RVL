@@ -1,0 +1,19 @@
+WadDataInfo for Win32 by alpha-0
+Tool to show the info of wad, tik or tmd files.
+
+The info includes:
+Path, Type, TitleID, Version, ManufacturerID, IOS Flag, Region Flag,
+No. of data files and Estimated installed size.
+
+Usage
+-----
+WadDataInfo [input file(s)]
+	/n  -- no wait for a user key before the program exits
+	/h  -- display this help message
+	/?  -- display this help message                 
+	input files -- any .wad, .tik or .tmd files
+
+Example
+-------
+Show the info of "BOOT2-64-v2.wad" and "IOS55-64-v4633.wad":
+WadDataInfo BOOT2-64-v2.wad IOS55-64-v4633.wad
